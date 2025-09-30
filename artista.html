@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna García - Artista Oficial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -300px;
+            right: -300px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .artist-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin: 0 auto 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero .tagline {
+            font-size: 24px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-link:hover {
+            background: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Bio Section */
+        .bio {
+            padding: 100px 20px;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .bio-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Albums Section */
+        .albums {
+            padding: 100px 20px;
+            background: #f8f9fa;
+        }
+
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .album-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: white;
+        }
+
+        .album-info {
+            padding: 25px;
+        }
+
+        .album-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .album-year {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .album-tracks {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        /* Tours Section */
+        .tours {
+            padding: 100px 20px;
+            background: white;
+        }
+
+        .tour-list {
+            max-width: 900px;
+            margin: 50px auto 0;
+        }
+
+        .tour-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 30px;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .tour-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+            transform: translateX(5px);
+        }
+
+        .tour-date {
+            text-align: center;
+        }
+
+        .tour-day {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+            line-height: 1;
+        }
+
+        .tour-month {
+            font-size: 16px;
+            color: #666;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .tour-details h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .tour-venue {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .tour-location {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .tour-action {
+            text-align: right;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+        }
+
+        .newsletter-form button {
+            padding: 15px 35px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero .tagline {
+                font-size: 18px;
+            }
+
+            .section-title h2 {
+                font-size: 32px;
+            }
+
+            .tour-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .tour-action {
+                text-align: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="artist-photo">🎤</div>
+            <h1>Luna García</h1>
+            <p class="tagline">Cantautora • Pop/Indie</p>
+            <div class="social-links">
+                <a href="#" class="social-link">📷</a>
+                <a href="#" class="social-link">🎵</a>
+                <a href="#" class="social-link">▶️</a>
+                <a href="#" class="social-link">🐦</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bio Section -->
+    <section class="bio">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Sobre Mí</h2>
+            </div>
+            <div class="bio-content fade-in">
+                <p>Luna García es una cantautora emergente que fusiona el pop contemporáneo con toques indie y folk. Nacida en Buenos Aires, comenzó su carrera musical a los 16 años componiendo en su habitación. Con letras honestas y melodías cautivadoras, ha logrado conectar con miles de oyentes alrededor del mundo.</p>
+                <br>
+                <p>Su música explora temas de amor, autodescubrimiento y las experiencias de la vida moderna, siempre con una perspectiva fresca y auténtica que resuena con su generación.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Albums Section -->
+    <section class="albums">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Discografía</h2>
+                <p>Explora mis álbumes y escucha mi evolución musical</p>
+            </div>
+            <div class="albums-grid">
+                <div class="album-card fade-in">
+                    <div class="album-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🌅</div>
+                    <div class="album-info">
+                        <div class="album-title">Horizontes</div>
+                        <div class="album-year">2024</div>
+                        <div class="album-tracks">12 canciones • 42 min</div>
+                    </div>
+                </div>
+                <div class="album-card fade-in">
+                    <div class="album-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🌙</div>
+                    <div class="album-info">
+                        <div class="album-title">Noches Claras</div>
+                        <div class="album-year">2023</div>
+                        <div class="album-tracks">10 canciones • 38 min</div>
+                    </div>
+                </div>
+                <div class="album-card fade-in">
+                    <div class="album-cover" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🌸</div>
+                    <div class="album-info">
+                        <div class="album-title">Primavera Interior</div>
+                        <div class="album-year">2022</div>
+                        <div class="album-tracks">8 canciones • 31 min</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tours Section -->
+    <section class="tours">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Próximos Shows</h2>
+                <p>Ven a verme en vivo y comparte la experiencia</p>
+            </div>
+            <div class="tour-list">
+                <div class="tour-item fade-in">
+                    <div class="tour-date">
+                        <div class="tour-day">15</div>
+                        <div class="tour-month">Oct</div>
+                    </div>
+                    <div class="tour-details">
+                        <h3>Teatro Coliseo</h3>
+                        <div class="tour-venue">Presentación álbum "Horizontes"</div>
+                        <div class="tour-location">Buenos Aires, Argentina</div>
+                    </div>
+                    <div class="tour-action">
+                        <a href="#" class="btn">Comprar</a>
+                    </div>
+                </div>
+                <div class="tour-item fade-in">
+                    <div class="tour-date">
+                        <div class="tour-day">23</div>
+                        <div class="tour-month">Oct</div>
+                    </div>
+                    <div class="tour-details">
+                        <h3>Estadio Luna Park</h3>
+                        <div class="tour-venue">Tour "Horizontes"</div>
+                        <div class="tour-location">Buenos Aires, Argentina</div>
+                    </div>
+                    <div class="tour-action">
+                        <a href="#" class="btn">Comprar</a>
+                    </div>
+                </div>
+                <div class="tour-item fade-in">
+                    <div class="tour-date">
+                        <div class="tour-day">05</div>
+                        <div class="tour-month">Nov</div>
+                    </div>
+                    <div class="tour-details">
+                        <h3>Quality Espacio</h3>
+                        <div class="tour-venue">Acústico Íntimo</div>
+                        <div class="tour-location">Córdoba, Argentina</div>
+                    </div>
+                    <div class="tour-action">
+                        <a href="#" class="btn">Comprar</a>
+                    </div>
+                </div>
+                <div class="tour-item fade-in">
+                    <div class="tour-date">
+                        <div class="tour-day">18</div>
+                        <div class="tour-month">Nov</div>
+                    </div>
+                    <div class="tour-details">
+                        <h3>Teatro Opera</h3>
+                        <div class="tour-venue">Tour "Horizontes"</div>
+                        <div class="tour-location">Rosario, Argentina</div>
+                    </div>
+                    <div class="tour-action">
+                        <a href="#" class="btn">Comprar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Mantente Conectado</h2>
+            <p>Suscríbete para recibir noticias, lanzamientos y fechas de shows</p>
+            <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+                <input type="email" placeholder="tu@email.com" required>
+                <button type="submit">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-social">
+                <a href="#" class="footer-link">Instagram</a>
+                <a href="#" class="footer-link">Spotify</a>
+                <a href="#" class="footer-link">YouTube</a>
+                <a href="#" class="footer-link">Twitter</a>
+            </div>
+            <p>&copy; 2025 Luna García. Powered by Eco Records.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+
+        function handleSubscribe(e) {
+            e.preventDefault();
+            alert('¡Gracias por suscribirte! Pronto recibirás noticias exclusivas.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Artista</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .artist-info h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .artist-info p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 18px 30px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            background: #e8e8e8;
+            color: #333;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: white;
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 500px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .change {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .chart-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .chart {
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            padding: 20px 0;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+            transform: translateY(-5px);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .top-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        .list-item:hover {
+            background: #f8f9fa;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            width: 40px;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .song-album {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .plays {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .album-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+        }
+
+        .album-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .album-year {
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="avatar">🎵</div>
+            <div class="artist-info">
+                <h1>Nombre del Artista</h1>
+                <p>Género: Pop/Rock • Miembro desde 2023</p>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="nav-tab" onclick="showTab('registro')">➕ Registro de Discos</button>
+            <button class="nav-tab" onclick="showTab('discos')">💿 Discos Registrados</button>
+            <button class="nav-tab" onclick="showTab('canciones')">🎵 Canciones Más Escuchadas</button>
+            <button class="nav-tab" onclick="showTab('web')">🌐 Editar Sitio Web</button>
+        </div>
+
+        <div class="content">
+            <!-- Dashboard Principal -->
+            <div id="dashboard" class="tab-pane active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Reproducciones</h3>
+                        <div class="value">2.4M</div>
+                        <div class="change">↑ 12% este mes</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Oyentes Mensuales</h3>
+                        <div class="value">450K</div>
+                        <div class="change">↑ 8% este mes</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Álbumes Publicados</h3>
+                        <div class="value">5</div>
+                        <div class="change">2 este año</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Seguidores</h3>
+                        <div class="value">89K</div>
+                        <div class="change">↑ 15% este mes</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>📈 Reproducciones por Mes</h2>
+                    <div class="chart">
+                        <div class="bar" style="height: 60%;">
+                            <div class="bar-value">180K</div>
+                            <div class="bar-label">Ene</div>
+                        </div>
+                        <div class="bar" style="height: 75%;">
+                            <div class="bar-value">225K</div>
+                            <div class="bar-label">Feb</div>
+                        </div>
+                        <div class="bar" style="height: 85%;">
+                            <div class="bar-value">255K</div>
+                            <div class="bar-label">Mar</div>
+                        </div>
+                        <div class="bar" style="height: 70%;">
+                            <div class="bar-value">210K</div>
+                            <div class="bar-label">Abr</div>
+                        </div>
+                        <div class="bar" style="height: 90%;">
+                            <div class="bar-value">270K</div>
+                            <div class="bar-label">May</div>
+                        </div>
+                        <div class="bar" style="height: 100%;">
+                            <div class="bar-value">300K</div>
+                            <div class="bar-label">Jun</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>🔥 Top 5 Canciones Más Escuchadas</h2>
+                    <div class="top-list">
+                        <div class="list-item">
+                            <div class="rank">1</div>
+                            <div class="song-info">
+                                <div class="song-title">Melodía del Verano</div>
+                                <div class="song-album">Álbum: Días de Sol</div>
+                            </div>
+                            <div class="plays">1.2M plays</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="rank">2</div>
+                            <div class="song-info">
+                                <div class="song-title">Noches de Ciudad</div>
+                                <div class="song-album">Álbum: Urbano</div>
+                            </div>
+                            <div class="plays">890K plays</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="rank">3</div>
+                            <div class="song-info">
+                                <div class="song-title">Recuerdos</div>
+                                <div class="song-album">Álbum: Nostalgia</div>
+                            </div>
+                            <div class="plays">756K plays</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="rank">4</div>
+                            <div class="song-info">
+                                <div class="song-title">Bailando Bajo la Luna</div>
+                                <div class="song-album">Álbum: Días de Sol</div>
+                            </div>
+                            <div class="plays">623K plays</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="rank">5</div>
+                            <div class="song-info">
+                                <div class="song-title">Amanecer</div>
+                                <div class="song-album">Álbum: Nuevo Día</div>
+                            </div>
+                            <div class="plays">545K plays</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registro de Discos -->
+            <div id="registro" class="tab-pane">
+                <h2 style="margin-bottom: 25px;">➕ Registrar Nuevo Disco</h2>
+                <form onsubmit="registrarDisco(event)">
+                    <div class="form-group">
+                        <label>Título del Álbum</label>
+                        <input type="text" placeholder="Ej: Mi Nuevo Álbum" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Año de Lanzamiento</label>
+                        <input type="number" placeholder="2025" min="1900" max="2100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Género Musical</label>
+                        <select required>
+                            <option value="">Selecciona un género</option>
+                            <option>Pop</option>
+                            <option>Rock</option>
+                            <option>Jazz</option>
+                            <option>Electrónica</option>
+                            <option>Hip Hop</option>
+                            <option>Reggaeton</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de Canciones</label>
+                        <input type="number" placeholder="10" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea rows="4" placeholder="Describe tu álbum..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Registrar Álbum</button>
+                </form>
+            </div>
+
+            <!-- Discos Registrados -->
+            <div id="discos" class="tab-pane">
+                <h2 style="margin-bottom: 25px;">💿 Mis Discos</h2>
+                <div class="album-grid">
+                    <div class="album-card">
+                        <div class="album-cover">🎵</div>
+                        <div class="album-title">Días de Sol</div>
+                        <div class="album-year">2024 • 12 canciones</div>
+                    </div>
+                    <div class="album-card">
+                        <div class="album-cover">🎸</div>
+                        <div class="album-title">Urbano</div>
+                        <div class="album-year">2023 • 10 canciones</div>
+                    </div>
+                    <div class="album-card">
+                        <div class="album-cover">🎹</div>
+                        <div class="album-title">Nostalgia</div>
+                        <div class="album-year">2023 • 14 canciones</div>
+                    </div>
+                    <div class="album-card">
+                        <div class="album-cover">🎤</div>
+                        <div class="album-title">Nuevo Día</div>
+                        <div class="album-year">2022 • 11 canciones</div>
+                    </div>
+                    <div class="album-card">
+                        <div class="album-cover">🎧</div>
+                        <div class="album-title">Acústico</div>
+                        <div class="album-year">2022 • 8 canciones</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canciones Más Escuchadas -->
+            <div id="canciones" class="tab-pane">
+                <h2 style="margin-bottom: 25px;">🎵 Ranking de Canciones</h2>
+                <div class="top-list">
+                    <div class="list-item">
+                        <div class="rank">1</div>
+                        <div class="song-info">
+                            <div class="song-title">Melodía del Verano</div>
+                            <div class="song-album">Álbum: Días de Sol • 2024</div>
+                        </div>
+                        <div class="plays">1.2M plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">2</div>
+                        <div class="song-info">
+                            <div class="song-title">Noches de Ciudad</div>
+                            <div class="song-album">Álbum: Urbano • 2023</div>
+                        </div>
+                        <div class="plays">890K plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">3</div>
+                        <div class="song-info">
+                            <div class="song-title">Recuerdos</div>
+                            <div class="song-album">Álbum: Nostalgia • 2023</div>
+                        </div>
+                        <div class="plays">756K plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">4</div>
+                        <div class="song-info">
+                            <div class="song-title">Bailando Bajo la Luna</div>
+                            <div class="song-album">Álbum: Días de Sol • 2024</div>
+                        </div>
+                        <div class="plays">623K plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">5</div>
+                        <div class="song-info">
+                            <div class="song-title">Amanecer</div>
+                            <div class="song-album">Álbum: Nuevo Día • 2022</div>
+                        </div>
+                        <div class="plays">545K plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">6</div>
+                        <div class="song-info">
+                            <div class="song-title">Caminos</div>
+                            <div class="song-album">Álbum: Urbano • 2023</div>
+                        </div>
+                        <div class="plays">489K plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">7</div>
+                        <div class="song-info">
+                            <div class="song-title">Suspiros</div>
+                            <div class="song-album">Álbum: Acústico • 2022</div>
+                        </div>
+                        <div class="plays">412K plays</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="rank">8</div>
+                        <div class="song-info">
+                            <div class="song-title">Eternidad</div>
+                            <div class="song-album">Álbum: Nostalgia • 2023</div>
+                        </div>
+                        <div class="plays">378K plays</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editar Sitio Web -->
+            <div id="web" class="tab-pane">
+                <h2 style="margin-bottom: 25px;">🌐 Configuración del Sitio Web Personal</h2>
+                <form onsubmit="guardarWeb(event)">
+                    <div class="form-group">
+                        <label>URL Personalizada</label>
+                        <input type="text" placeholder="mi-artista" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Biografía</label>
+                        <textarea rows="5" placeholder="Escribe tu biografía para el sitio web..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Redes Sociales - Instagram</label>
+                        <input type="text" placeholder="@usuario">
+                    </div>
+                    <div class="form-group">
+                        <label>Redes Sociales - Twitter/X</label>
+                        <input type="text" placeholder="@usuario">
+                    </div>
+                    <div class="form-group">
+                        <label>Redes Sociales - Facebook</label>
+                        <input type="text" placeholder="facebook.com/usuario">
+                    </div>
+                    <div class="form-group">
+                        <label>YouTube Channel</label>
+                        <input type="text" placeholder="youtube.com/@usuario">
+                    </div>
+                    <div class="form-group">
+                        <label>Color Principal del Sitio</label>
+                        <input type="color" value="#667eea">
+                    </div>
+                    <button type="submit" class="btn">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Ocultar todos los tab-panes
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.remove('active'));
+
+            // Desactivar todos los botones
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Mostrar el tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+
+            // Activar el botón correspondiente
+            event.target.classList.add('active');
+        }
+
+        function registrarDisco(e) {
+            e.preventDefault();
+            alert('¡Álbum registrado exitosamente!');
+            e.target.reset();
+        }
+
+        function guardarWeb(e) {
+            e.preventDefault();
+            alert('¡Configuración del sitio web guardada exitosamente!');
+        }
+
+        // Animación de las barras del gráfico al cargar
+        window.addEventListener('load', () => {
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach((bar, index) => {
+                bar.style.opacity = '0';
+                setTimeout(() => {
+                    bar.style.transition = 'all 0.6s ease';
+                    bar.style.opacity = '1';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
