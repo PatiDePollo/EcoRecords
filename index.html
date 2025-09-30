@@ -3,604 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Records - Tu carrera musical sin límites</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            top: -250px;
-            right: -250px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-            bottom: -200px;
-            left: -200px;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(30px); }
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-            padding: 40px 20px;
-            max-width: 900px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 40px;
-            opacity: 0.95;
-            line-height: 1.6;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 18px 40px;
-            font-size: 18px;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 100px 20px;
-            background: #f8f9fa;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 42px;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            font-size: 18px;
-            color: #666;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .feature-card h3 {
-            font-size: 26px;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.7;
-        }
-
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 20px;
-            background: white;
-        }
-
-        .benefits-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .benefits-text h2 {
-            font-size: 42px;
-            color: #333;
-            margin-bottom: 30px;
-        }
-
-        .benefit-item {
-            margin-bottom: 30px;
-            padding-left: 40px;
-            position: relative;
-        }
-
-        .benefit-item::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .benefit-item h4 {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .benefit-item p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .benefits-visual {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 500px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dashboard-preview {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            transform: perspective(1000px) rotateY(-10deg);
-            transition: transform 0.5s ease;
-        }
-
-        .benefits-visual:hover .dashboard-preview {
-            transform: perspective(1000px) rotateY(0deg);
-        }
-
-        .preview-header {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .preview-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ddd;
-        }
-
-        .preview-content {
-            background: #f8f9fa;
-            height: 300px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 52px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .stat-item p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 20px;
-            background: #f8f9fa;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 42px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 40px;
-        }
-
-        /* Footer */
-        .footer {
-            background: #2d3748;
-            color: white;
-            padding: 60px 20px 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-section a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .benefits-content {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title h2 {
-                font-size: 32px;
-            }
-
-            .benefits-visual {
-                padding: 40px 20px;
-            }
-
-            .dashboard-preview {
-                transform: none;
-            }
-        }
-
-        /* Scroll Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
+    <title>Eco Records - Productora Musical</title>
+    <link rel="stylesheet" href="Assets/index.css?v=2">
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
+    <header>
+        <div class="logo-container">
+            <img src="Assets/Logo.png" alt="Eco Records" style="height: 50px; width: auto;">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#artistas">Artistas</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
         <div class="hero-content">
-            <div class="logo">🎵</div>
-            <h1>Eco Records</h1>
-            <p>Tu carrera musical sin límites</p>
-            <div class="cta-buttons">
-                <a href="dashboard.html" class="btn btn-primary">Ver Demo</a>
-                <a href="#features" class="btn btn-secondary">Conocer Más</a>
-            </div>
+            <img src="Assets/Logo.png" alt="Eco Records" style="height: 150px; width: auto;">
+            <p>Productora musical que impulsa talento y crea estrellas</p>
+            <a href="#contacto" class="cta-button">Trabajá con Nosotros</a>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>Todo lo que necesitas en un solo lugar</h2>
-                <p>Diseñado por artistas, para artistas que quieren libertad creativa</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card fade-in">
-                    <span class="feature-icon">📝</span>
-                    <h3>Contratos Permisivos</h3>
-                    <p>Olvídate de los contratos abusivos. Mantén el 100% de tus derechos creativos y decide cómo distribuir tu música sin restricciones innecesarias.</p>
-                </div>
-                <div class="feature-card fade-in">
-                    <span class="feature-icon">🎛️</span>
-                    <h3>Administración Total</h3>
-                    <p>Gestiona tus redes sociales, sitio web, tours y contenido desde un dashboard intuitivo. Todo centralizado para que te enfoques en crear música.</p>
-                </div>
-                <div class="feature-card fade-in">
-                    <span class="feature-icon">📊</span>
-                    <h3>Estadísticas Completas</h3>
-                    <p>Visualiza en tiempo real cómo se comportan tus álbumes y canciones en todas las plataformas. Datos precisos para tomar mejores decisiones.</p>
+    <section class="artists" id="artistas">
+        <h2 class="section-title">Nuestros Artistas</h2>
+        <div class="artists-grid">
+            <div class="artist-card">
+                <div class="artist-image">🎤</div>
+                <div class="artist-info">
+                    <div class="artist-name">Artista 1</div>
+                    <div class="artist-genre">Trap / Hip Hop</div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits">
-        <div class="container">
-            <div class="benefits-content">
-                <div class="benefits-text">
-                    <h2>Libertad para experimentar y crear</h2>
-                    <div class="benefit-item fade-in">
-                        <h4>Sin procesos burocráticos</h4>
-                        <p>Regístrate en minutos y comienza a publicar tu música sin papeleos interminables ni esperas frustrantes.</p>
-                    </div>
-                    <div class="benefit-item fade-in">
-                        <h4>Experimenta sin límites</h4>
-                        <p>Prueba nuevos sonidos, géneros y formas de arte. Aquí no hay restricciones creativas, solo posibilidades.</p>
-                    </div>
-                    <div class="benefit-item fade-in">
-                        <h4>Control absoluto</h4>
-                        <p>Tú decides cuándo, cómo y dónde se distribuye tu música. Mantén el control de tu carrera en todo momento.</p>
-                    </div>
-                    <div class="benefit-item fade-in">
-                        <h4>Soporte dedicado</h4>
-                        <p>Equipo de expertos disponible para ayudarte a crecer y alcanzar tus objetivos musicales.</p>
-                    </div>
+            <div class="artist-card">
+                <div class="artist-image">🎵</div>
+                <div class="artist-info">
+                    <div class="artist-name">Artista 2</div>
+                    <div class="artist-genre">Reggaetón</div>
                 </div>
-                <div class="benefits-visual fade-in">
-                    <div class="dashboard-preview">
-                        <div class="preview-header">
-                            <div class="preview-dot"></div>
-                            <div class="preview-dot"></div>
-                            <div class="preview-dot"></div>
-                        </div>
-                        <div class="preview-content">
-                            📈
-                        </div>
-                    </div>
+            </div>
+            <div class="artist-card">
+                <div class="artist-image">🎸</div>
+                <div class="artist-info">
+                    <div class="artist-name">Artista 3</div>
+                    <div class="artist-genre">Pop Urbano</div>
+                </div>
+            </div>
+            <div class="artist-card">
+                <div class="artist-image">🎹</div>
+                <div class="artist-info">
+                    <div class="artist-name">Artista 4</div>
+                    <div class="artist-genre">R&B / Soul</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item fade-in">
-                    <h3>10K+</h3>
-                    <p>Artistas activos</p>
-                </div>
-                <div class="stat-item fade-in">
-                    <h3>50M+</h3>
-                    <p>Reproducciones mensuales</p>
-                </div>
-                <div class="stat-item fade-in">
-                    <h3>150+</h3>
-                    <p>Países alcanzados</p>
-                </div>
-                <div class="stat-item fade-in">
-                    <h3>98%</h3>
-                    <p>Satisfacción de artistas</p>
-                </div>
+    <section class="services" id="servicios">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎙️</div>
+                <h3>Producción Musical</h3>
+                <p>Producción profesional de tracks, beats y arreglos musicales de la más alta calidad.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📀</div>
+                <h3>Grabación</h3>
+                <p>Estudio de grabación equipado con tecnología de punta para capturar tu mejor sonido.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎚️</div>
+                <h3>Mezcla & Mastering</h3>
+                <p>Mezcla y masterización profesional que hace brillar tu música en todas las plataformas.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📸</div>
+                <h3>Marketing Musical</h3>
+                <p>Estrategias de marketing y promoción para llevar tu música al siguiente nivel.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎬</div>
+                <h3>Videoclips</h3>
+                <p>Producción audiovisual de videoclips y contenido para redes sociales.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎯</div>
+                <h3>Distribución</h3>
+                <p>Distribución digital en todas las plataformas: Spotify, Apple Music, YouTube y más.</p>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container fade-in">
-            <h2>¿Listo para llevar tu música al siguiente nivel?</h2>
-            <p>Únete a miles de artistas que ya confían en nosotros para impulsar sus carreras</p>
-            <a href="dashboard.html" class="btn btn-primary">Ver Demo</a>
+    <section class="contact" id="contacto">
+        <div class="contact-content">
+            <h2 class="section-title">Contactanos</h2>
+            <p>¿Querés ser parte de Eco Records? Hablemos sobre tu proyecto musical y cómo podemos ayudarte a crecer.</p>
+            <a href="mailto:info@ecorecords.com" class="contact-button">Enviar Mensaje</a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Eco Records</h3>
-                    <p>Empoderando artistas independientes desde 2023.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Producto</h3>
-                    <ul>
-                        <li><a href="#">Características</a></li>
-                        <li><a href="#">Precios</a></li>
-                        <li><a href="#">Demo</a></li>
-                        <li><a href="#">API</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Recursos</h3>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Guías</a></li>
-                        <li><a href="#">Soporte</a></li>
-                        <li><a href="#">Comunidad</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Empresa</h3>
-                    <ul>
-                        <li><a href="#">Sobre nosotros</a></li>
-                        <li><a href="#">Carreras</a></li>
-                        <li><a href="#">Contacto</a></li>
-                        <li><a href="#">Legal</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Eco Records. Todos los derechos reservados.</p>
-            </div>
+    <footer>
+        <div class="social-links">
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="YouTube">▶️</a>
+            <a href="#" title="Spotify">🎵</a>
+            <a href="#" title="TikTok">🎬</a>
         </div>
+        <p>&copy; 2025 Eco Records. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // Scroll Animation
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
+
+        // Animate on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -609,28 +147,17 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, observerOptions);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => observer.observe(el));
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        document.querySelectorAll('.artist-card, .service-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
         });
     </script>
 </body>
